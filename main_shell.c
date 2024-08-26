@@ -19,7 +19,7 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO) == 1)
 		{
-			write(STDOUT_FILENO, "cisfun$ ", 8);
+			write(STDOUT_FILENO, "Iamloumie@ALX$ ", 15);
 			fflush(stdout);
 		}
 		read_size = _getline(&user_input, &usrin_len, stdin);
