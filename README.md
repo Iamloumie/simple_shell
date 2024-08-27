@@ -68,6 +68,10 @@ By studying and working with this project, you can learn about:
 - Environment variable handling
 - Basic shell functionalities and how they're implemented
 
+## Author
+
+Lawal Adedamola Olumide
+
 ## Contributing
 
 This project is open for improvements and bug fixes. Feel free to fork the repository, make your changes, and submit a pull request.
