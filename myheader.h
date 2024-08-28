@@ -32,7 +32,7 @@ void childpro_exec(char *cmd, char *args[]);
 void print_env_var(void);
 int cmd_exec(char *cmdargs);
 void ch_user_dir(char *filepath);
-void builtin_cmd(char *user_input);
+int builtin_cmd(char *user_input);
 void prompt_disp(void);
 char *path_finder(char *command);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
