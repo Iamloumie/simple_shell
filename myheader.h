@@ -13,7 +13,9 @@ extern char **environ;
 #include <sys/wait.h>
 #include <ctype.h>
 #include <sys/types.h>
+#include <errno.h>
 
+/* the custom string functions */
 int _strlen(char *str);
 int _strlenc(const char *str);
 char *_strcpy(char *dest, char *src);
@@ -26,7 +28,7 @@ char *_stmstr(char *str);
 int _strncmp(const char *str1, const char *str2, size_t num);
 char *_strdup(const char *str);
 
-
+/* the shell functions */
 void error(char *cmd);
 void childpro_exec(char *cmd, char *args[]);
 void print_env_var(void);

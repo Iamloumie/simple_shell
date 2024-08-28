@@ -1,7 +1,5 @@
 #include "myheader.h"
 
-void prompt_disp(void);
-
 /**
  * main - Entry point of the shell program.
  * Return: Always returns 0.
@@ -11,10 +9,8 @@ int main(void)
 	char *filepath, *user_input = NULL;
 	size_t usrin_len = 0;
 	ssize_t read_size;
-	int loop;
-	int result;
+	int result, loop = 1;
 
-	loop = 1;
 	while (loop)
 	{
 		if (isatty(STDIN_FILENO) == 1)
@@ -26,24 +22,26 @@ int main(void)
 		if (read_size == -1)
 		{
 			free(user_input);
-			return (0);
+		return (0);
 		}
 		if (user_input[read_size - 1] == '\n')
 			user_input[read_size - 1] = '\0';
+		if (strcmp(user_input, "clear") == 0)
+		{
+			clear_screen();
+			continue;  /* Skip the rest of the loop */
+		}
 		builtin_cmd(user_input);
 		if (_strncmp(user_input, "cd", 2) == 0)
 		{
 			filepath = _stmstr(user_input + 2);
 			ch_user_dir(filepath);
-			free(user_input);
-			user_input = NULL;
-			usrin_len = 0;
 		}
-		if (read_size > 1)
+		else if (read_size > 1)
 		{
 			result = cmd_exec(_stmstr(user_input));
 			if (result == -1)
-				break;
+			break;
 		}
 	}
 	free(user_input);

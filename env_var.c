@@ -12,7 +12,8 @@ void print_env_var(void)
 		write(STDOUT_FILENO, "Environment variables are not set.\n", 36);
 		return;
 	}
-	for (env_var = environ; env_var != NULL; env_var++)
+
+	for (env_var = environ; *env_var != NULL; env_var++)
 	{
 		int env_len = _strlen(*env_var);
 

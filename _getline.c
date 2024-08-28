@@ -1,5 +1,4 @@
 #include "myheader.h"
-#define BUFFER_SIZE 1024
 
 /**
  * _getline - Reads an entire line from a given stream into a buffer.
@@ -15,40 +14,50 @@
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	static char buffer[BUFFER_SIZE];
-	int position = 0, c;
+	char *bufptr = NULL;
+	char *p = bufptr;
+	size_t size;
+    int c;
 
-	if (!lineptr || !n || !stream)
-		return (-1);
-
-	while ((c = fgetc(stream)) != EOF && c != '\n')
+	if (lineptr == NULL || stream == NULL || n == NULL)
 	{
-		if (position >= BUFFER_SIZE - 1)
+		errno = EINVAL;
+		return (-1);
+	}
+	bufptr = *lineptr;
+	size = *n;
+
+	c = fgetc(stream);
+	if (c == EOF)
+		return (-1);
+	if (bufptr == NULL)
+	{
+		bufptr = malloc(128);
+		if (bufptr == NULL)
+			return (-1);
+		size = 128;
+	}
+	p = bufptr;
+	while(c != EOF)
+	{
+		if ((size_t)(p - bufptr) > (size - 1))
 		{
-			fprintf(stderr, "Input too long, truncating.\n");
-			while ((c = fgetc(stream)) != '\n' && c != EOF)
-			;
+			size = size + 128;
+			bufptr = realloc(bufptr, size);
+			if (bufptr == NULL)
+				return (-1);
+		}
+		*p++ = c;
+		if (c == '\n')
+		{
 			break;
 		}
-		buffer[position++] = c;
+		c = fgetc(stream);
 	}
 
-	buffer[position] = '\0';
+	*p++ = '\0';
+	*lineptr = bufptr;
+	*n = size;
 
-	if (position == 0 && c == EOF)
-		return (-1);
-
-	if (!*lineptr || *n < (size_t)(position + 1))
-	{
-		*n = position + 1;
-		*lineptr = realloc(*lineptr, *n);
-		if (!*lineptr)
-		{
-			perror("realloc");
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	_strcpy(*lineptr, buffer);
-	return ((ssize_t)position);
+	return (p - bufptr - 1);
 }
