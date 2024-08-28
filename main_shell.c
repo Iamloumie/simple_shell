@@ -22,7 +22,7 @@ int main(void)
 			write(STDOUT_FILENO, "Iamloumie@ALX$ ", 15);
 			fflush(stdout);
 		}
-		read_size = _getline(&user_input, &usrin_len, stdin);
+		read_size = getline(&user_input, &usrin_len, stdin);
 		if (read_size == -1)
 		{
 			free(user_input);
