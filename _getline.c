@@ -38,7 +38,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		size = 128;
 	}
 	p = bufptr;
-	while(c != EOF)
+	while (c != EOF)
 	{
 		if ((size_t)(p - bufptr) > (size - 1))
 		{
@@ -59,5 +59,5 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	*lineptr = bufptr;
 	*n = size;
 
-	return (p - bufptr - 1);
+    return (p - bufptr - 1);
 }

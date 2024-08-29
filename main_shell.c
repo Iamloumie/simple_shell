@@ -6,7 +6,7 @@
  */
 int main(void)
 {
-	char *filepath, *user_input = NULL;
+	char *filepath, *user_input = NULL, *trimmed_input;
 	size_t usrin_len = 0;
 	ssize_t read_size;
 	int result, loop = 1;
@@ -31,15 +31,18 @@ int main(void)
 			clear_screen();
 			continue;  /* Skip the rest of the loop */
 		}
-		builtin_cmd(user_input);
-		if (_strncmp(user_input, "cd", 2) == 0)
+		trimmed_input = _stmstr(user_input);
+		if (*trimmed_input == '\0')
+			continue;
+		builtin_cmd(trimmed_input);
+		if (_strncmp(trimmed_input, "cd", 2) == 0)
 		{
-			filepath = _stmstr(user_input + 2);
+			filepath = _stmstr(trimmed_input + 2);
 			ch_user_dir(filepath);
 		}
 		else if (read_size > 1)
 		{
-			result = cmd_exec(_stmstr(user_input));
+			result = cmd_exec(trimmed_input);
 			if (result == -1)
 			break;
 		}
